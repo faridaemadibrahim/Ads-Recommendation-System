@@ -1,0 +1,102 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum AdType {
+  YOUTUBE
+  FACEBOOK
+  IMAGE
+  VIDEO
+}
+
+enum BehaviorAction {
+  VIEW
+  CLICK
+  LIKE
+  COMMENT
+  WATCH
+}
+model User {
+  id            Int             @id @default(autoincrement())
+  name          String
+  email         String          @unique
+  password      String
+  role          Role            @default(USER)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  interests     UserInterest[]
+  behaviors     UserBehavior[]
+  transactions  Transaction[]
+}
+model Category {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  ads         Ad[]
+  interests   UserInterest[]
+}model Ad {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  url         String
+  type        AdType
+  isActive    Boolean  @default(true)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  categoryId  Int
+  category    Category @relation(fields: [categoryId], references: [id])
+
+  behaviors   UserBehavior[]
+  transactions Transaction[]
+}
+model UserInterest {
+  id         Int      @id @default(autoincrement())
+
+  userId     Int
+  categoryId Int
+
+  user        User      @relation(fields: [userId], references: [id])
+  category    Category  @relation(fields: [categoryId], references: [id])
+}
+model UserBehavior {
+  id         Int      @id @default(autoincrement())
+
+  action     BehaviorAction
+  watchTime  Int?
+
+  createdAt  DateTime @default(now())
+
+  userId     Int
+  adId       Int
+
+  user        User @relation(fields: [userId], references: [id])
+  ad          Ad   @relation(fields: [adId], references: [id])
+}
+model Transaction {
+  id         Int      @id @default(autoincrement())
+
+  amount     Float
+
+  createdAt  DateTime @default(now())
+
+  userId     Int
+  adId       Int
+
+  user        User @relation(fields: [userId], references: [id])
+  ad          Ad   @relation(fields: [adId], references: [id])
+}
