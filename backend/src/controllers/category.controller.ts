@@ -45,6 +45,40 @@ class CategoryController {
       });
     }
   }
+  async update(req: Request, res: Response) {
+    try {
+      const id = Number(req.params.id);
+      const { name } = req.body;
+
+      const category = await categoryService.update(id, name);
+
+      return res.status(200).json({
+        message: "Category updated successfully",
+        category,
+      });
+    } catch (error) {
+      return res.status(400).json({
+        message:
+          error instanceof Error ? error.message : "Something went wrong",
+      });
+    }
+  }
+  async delete(req: Request, res: Response) {
+    try {
+      const id = Number(req.params.id);
+
+      await categoryService.delete(id);
+
+      return res.status(200).json({
+        message: "Category deleted successfully",
+      });
+    } catch (error) {
+      return res.status(400).json({
+        message:
+          error instanceof Error ? error.message : "Something went wrong",
+      });
+    }
+  }
 }
 
 export default new CategoryController();

@@ -37,6 +37,43 @@ class CategoryService {
 
     return category;
   }
-}
+  async update(id: number, name: string) {
+    const existingCategory = await prisma.category.findUnique({
+      where: {
+        id,
+      },
+    });
 
+    if (!existingCategory) {
+      throw new Error("Category not found");
+    }
+
+    const category = await prisma.category.update({
+      where: {
+        id,
+      },
+      data: {
+        name,
+      },
+    });
+
+    return category;
+  }
+  async delete(id: number) {
+    const existingCategory = await prisma.category.findUnique({
+      where: {
+        id,
+      },
+    });
+    if (!existingCategory) {
+      throw new Error("Category not found");
+    }
+    const category = await prisma.category.delete({
+      where: {
+        id,
+      },
+    });
+    return category;
+  }
+}
 export default new CategoryService();
