@@ -1,20 +1,17 @@
 import { Request, Response } from "express";
-import categoryService from "../services/category.service";
-import {
-  createCategorySchema,
-  updateCategorySchema,
-} from "../validator/category.validator";
+import adService from "../services/ad.service";
+import { createAdSchema, updateAdSchema } from "../validator/ad.validator";
 
-class CategoryController {
+class AdController {
   async create(req: Request, res: Response) {
     try {
-      const { name } = createCategorySchema.parse(req.body);
+      const data = createAdSchema.parse(req.body);
 
-      const category = await categoryService.create(name);
+      const ad = await adService.create(data);
 
       return res.status(201).json({
-        message: "Category created successfully",
-        category,
+        message: "Ad created successfully",
+        ad,
       });
     } catch (error) {
       return res.status(400).json({
@@ -26,9 +23,9 @@ class CategoryController {
 
   async getAll(req: Request, res: Response) {
     try {
-      const categories = await categoryService.getAll();
+      const ads = await adService.getAll();
 
-      return res.status(200).json(categories);
+      return res.status(200).json(ads);
     } catch (error) {
       return res.status(400).json({
         message:
@@ -41,9 +38,9 @@ class CategoryController {
     try {
       const id = Number(req.params.id);
 
-      const category = await categoryService.getById(id);
+      const ad = await adService.getById(id);
 
-      return res.status(200).json(category);
+      return res.status(200).json(ad);
     } catch (error) {
       return res.status(400).json({
         message:
@@ -56,13 +53,13 @@ class CategoryController {
     try {
       const id = Number(req.params.id);
 
-      const { name } = updateCategorySchema.parse(req.body);
+      const data = updateAdSchema.parse(req.body);
 
-      const category = await categoryService.update(id, name);
+      const ad = await adService.update(id, data);
 
       return res.status(200).json({
-        message: "Category updated successfully",
-        category,
+        message: "Ad updated successfully",
+        ad,
       });
     } catch (error) {
       return res.status(400).json({
@@ -76,10 +73,10 @@ class CategoryController {
     try {
       const id = Number(req.params.id);
 
-      await categoryService.delete(id);
+      await adService.delete(id);
 
       return res.status(200).json({
-        message: "Category deleted successfully",
+        message: "Ad deleted successfully",
       });
     } catch (error) {
       return res.status(400).json({
@@ -90,4 +87,4 @@ class CategoryController {
   }
 }
 
-export default new CategoryController();
+export default new AdController();
