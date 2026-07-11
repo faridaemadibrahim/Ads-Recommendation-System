@@ -1,9 +1,9 @@
-import { Request, Response } from "express";
+import type { Request, Response } from "express";
 import categoryService from "../services/category.service";
 import {
   createCategorySchema,
   updateCategorySchema,
-} from "../validator/category.validator";
+} from "../validator/category.validator.js";
 
 class CategoryController {
   async create(req: Request, res: Response) {

@@ -1,7 +1,6 @@
 import adRepository from "../repositories/ad.repository";
 import categoryRepository from "../repositories/category.repository";
-import { AdType } from "../config/prisma";
-
+import { AdType } from "../generated/prisma/client.js";
 type CreateAdData = {
   title: string;
   description: string;

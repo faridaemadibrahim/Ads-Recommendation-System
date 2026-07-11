@@ -7,3 +7,5 @@ export const createCategorySchema = z.object({
     .min(3, "Category name is too short")
     .max(50, "Category name is too long"),
 });
+
+export const updateCategorySchema = createCategorySchema.partial();

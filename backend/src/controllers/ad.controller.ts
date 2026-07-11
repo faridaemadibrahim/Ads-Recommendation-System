@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import type { Request, Response } from "express";
 import adService from "../services/ad.service";
 import { createAdSchema, updateAdSchema } from "../validator/ad.validator";
 

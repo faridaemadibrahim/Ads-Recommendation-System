@@ -62,6 +62,23 @@ class AdRepository {
       },
     });
   }
+  async findByCategories(categoryIds: number[]) {
+    if (categoryIds.length === 0) {
+      return [];
+    }
+
+    return prisma.ad.findMany({
+      where: {
+        categoryId: {
+          in: categoryIds,
+        },
+        isActive: true,
+      },
+      include: {
+        category: true,
+      },
+    });
+  }
 }
 
 export default new AdRepository();
