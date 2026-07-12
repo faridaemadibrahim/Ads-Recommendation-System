@@ -1,0 +1,28 @@
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f8f9ff 0%, #eef4ff 100%);
+  padding: 2rem 1rem;
+}
+
+.auth-card {
+  border: 0;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.auth-card .card-body {
+  padding: 2rem;
+}
+
+.auth-card .form-control {
+  border-radius: 0.75rem;
+  padding: 0.8rem 1rem;
+}
+
+.auth-card .btn-primary {
+  border-radius: 0.75rem;
+  padding: 0.8rem 1rem;
+}
